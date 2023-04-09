@@ -51,6 +51,16 @@ func (u *UserService) GetUserByID(id string) (dto.UserDTO, error) {
 	return dto.UserToDTO(user), nil
 }
 
+// Get user by id with password
+func (u *UserService) GetUserByIDPassword(id string) (dto.UserPasswordDTO, error) {
+	user, err := u.userDB.GetUserByID(id)
+	if err != nil {
+		return dto.UserPasswordDTO{}, err
+	}
+
+	return dto.UserToPasswordDTO(user), nil
+}
+
 // Update user
 func (u *UserService) UpdateUser(user dto.UserDTO, id string) error {
 	oldUser, err := u.userDB.GetUserByID(id)

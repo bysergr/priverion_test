@@ -12,6 +12,25 @@ type UserDTO struct {
 	Role     string `json:"role"`
 }
 
+type UserPasswordDTO struct {
+	ID       string `json:"id"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
+	Role     string `json:"role"`
+	Password string `json:"password"`
+}
+
+// Convert User to UserPasswordDTO
+func UserToPasswordDTO(user models.User) UserPasswordDTO {
+	return UserPasswordDTO{
+		ID:       user.ID.Hex(),
+		Username: user.Username,
+		Email:    user.Email,
+		Role:     user.Role,
+		Password: user.Password,
+	}
+}
+
 // Convert User to UserDTO
 func UserToDTO(user models.User) UserDTO {
 	return UserDTO{
