@@ -12,7 +12,7 @@ func AdminRouter(r *gin.Engine) {
 	router := r.Group("/")
 
 	// Middlewares
-	router.Use(middlewares.JWTAdmin)
+	router.Use(middlewares.JWT, middlewares.JWTAdmin)
 
 	// Routes for Hotel
 	router.POST("/hotel", handlers.CreateHotel)
