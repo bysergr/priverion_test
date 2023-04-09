@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"errors"
+	"fmt"
 	"time"
 
 	"github.com/bysergr/priverion_test/server/dto"
@@ -15,7 +17,6 @@ func GenerateToken(auth dto.Auth) (string, int64, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"id":             auth.ID,
 		"username":       auth.Username,
-		"password":       auth.Password,
 		"ExpirationTime": expirationTime,
 	})
 
@@ -27,6 +28,25 @@ func GenerateToken(auth dto.Auth) (string, int64, error) {
 	return tokenString, expirationTime, nil
 }
 
-func ValidateToken() {
+func ValidateToken(tokenString string)  (map[string]string, error) {
+	env := GetENV()
 
+	token, _ := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, errors.New("error validating token")
+		}
+
+
+		return []byte(env.JWT), nil
+	})
+
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		return map[string]string{
+			"id":             fmt.Sprintf("%v", claims["id"]),
+			"username":       fmt.Sprintf("%v", claims["username"]),
+			"ExpirationTime": fmt.Sprintf("%v", claims["ExpirationTime"]),
+		}, nil
+	}
+
+	return nil, errors.New("error validating token")
 }

@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/bysergr/priverion_test/server/handlers"
+	"github.com/bysergr/priverion_test/server/middlewares"
 	"github.com/gin-gonic/gin"
 )
 
@@ -9,6 +10,9 @@ import (
 func AdminRouter(r *gin.Engine) {
 
 	router := r.Group("/")
+
+	// Middlewares
+	router.Use(middlewares.JWTAdmin)
 
 	// Routes for Hotel
 	router.POST("/hotel", handlers.CreateHotel)
