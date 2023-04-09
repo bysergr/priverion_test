@@ -14,6 +14,7 @@ type ENV struct {
 	PORT_API    int16
 	USER_DB     string
 	PASSWORD_DB string
+	DATABASE 	string
 }
 
 var (
@@ -46,6 +47,7 @@ func GetENV() ENV {
 			PORT_API:     int16(port_api),
 			USER_DB:     os.Getenv("USER_DB"),
 			PASSWORD_DB: os.Getenv("PASSWORD_DB"),
+			DATABASE: os.Getenv("DATABASE"),
 		}
 	}
 
