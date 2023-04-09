@@ -10,11 +10,12 @@ import (
 
 type ENV struct {
 	HOST_DB     string
-	PORT_DB    	int16 
+	PORT_DB     int16
 	PORT_API    int16
 	USER_DB     string
 	PASSWORD_DB string
-	DATABASE 	string
+	DATABASE    string
+	JWT         string
 }
 
 var (
@@ -41,13 +42,14 @@ func GetENV() ENV {
 			panic(errors.New("port database should be a number"))
 		}
 
-		env = &ENV {
+		env = &ENV{
 			HOST_DB:     os.Getenv("HOST_DB"),
 			PORT_DB:     int16(port_db),
-			PORT_API:     int16(port_api),
+			PORT_API:    int16(port_api),
 			USER_DB:     os.Getenv("USER_DB"),
 			PASSWORD_DB: os.Getenv("PASSWORD_DB"),
-			DATABASE: os.Getenv("DATABASE"),
+			DATABASE:    os.Getenv("DATABASE"),
+			JWT:         os.Getenv("JWT"),
 		}
 	}
 
