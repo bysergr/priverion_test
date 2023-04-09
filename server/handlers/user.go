@@ -7,60 +7,24 @@ import (
 	"github.com/bysergr/priverion_test/server/dto"
 	"github.com/bysergr/priverion_test/server/models"
 	ser "github.com/bysergr/priverion_test/server/services"
-	"github.com/bysergr/priverion_test/server/utils"
 	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 var (
 	userService = ser.NewUserService()
 )
 
-// CreateUser creates a new user and adds it to the database
-func CreateUser(c *gin.Context) {
-	var user models.User
-
-	if err := c.BindJSON(&user); err != nil {
-		log.Println("Error:", err.Error())
-
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request"})
-		return
-	}
-
-	psw, err := utils.Encrypt(user.Password)
-	if err != nil {
-		log.Println("Error:", err.Error())
-
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error creating user"})
-		return
-	}
-
-	user.Password = psw
-
-	user.ID = primitive.NewObjectID()
-
-	err = userService.CreateUser(user)
-	if err != nil {
-		log.Println("Error:", err.Error())
-
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error creating user"})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "User created successfully"})
-}
-
 // GetUsers returns all users from the database
 func GetUsers(c *gin.Context) {
 	users, err := userService.GetAllUsers()
-	if err != nil  {
+	if err != nil {
 		log.Println("Error:", err.Error())
 	}
 
 	if err != nil || users == nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Users not found"})
-		return 
-	} 
+		return
+	}
 
 	c.JSON(http.StatusOK, users)
 }

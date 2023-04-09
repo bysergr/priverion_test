@@ -20,5 +20,6 @@ func BaseRouter(r *gin.Engine) {
 	router.GET("/hotel/:id", handlers.GetHotelByID)
 
 	// Routes for Session
-	router.POST("/register", handlers.CreateUser)
+	router.POST("/register", handlers.Register)
+	router.POST("/login", handlers.Login)
 }
