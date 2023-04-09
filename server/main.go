@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
+	"github.com/bysergr/priverion_test/server/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,5 +21,7 @@ func main() {
 		})
 	})
 
-	r.Run()
+	port := fmt.Sprintf(":%d", utils.GetENV().PORT_API)
+
+	r.Run(port)
 }
