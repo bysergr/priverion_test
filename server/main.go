@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 
+	"github.com/bysergr/priverion_test/server/middlewares"
+	"github.com/bysergr/priverion_test/server/routes"
 	"github.com/bysergr/priverion_test/server/utils"
 	"github.com/gin-gonic/gin"
 )
@@ -15,11 +16,14 @@ import (
 func main() {
 	r := gin.Default()
 
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H {
-			"message": "pong",
-		})
-	})
+	// Middlewares
+	r.Use(middlewares.JSON)
+	
+	// Routes
+	routes.BaseRouter(r)
+	routes.UserRouter(r)
+	routes.AdminRouter(r)
+
 
 	port := fmt.Sprintf(":%d", utils.GetENV().PORT_API)
 
