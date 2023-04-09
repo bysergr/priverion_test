@@ -16,6 +16,7 @@ type ENV struct {
 	PASSWORD_DB string
 	DATABASE    string
 	JWT         string
+	CLIENT_URI  string
 }
 
 var (
@@ -50,6 +51,7 @@ func GetENV() ENV {
 			PASSWORD_DB: os.Getenv("PASSWORD_DB"),
 			DATABASE:    os.Getenv("DATABASE"),
 			JWT:         os.Getenv("JWT"),
+			CLIENT_URI:  os.Getenv("CLIENT_URI"),
 		}
 	}
 

@@ -18,6 +18,7 @@ func main() {
 
 	// Middlewares
 	r.Use(middlewares.JSON)
+	r.Use(middlewares.Cors)
 	
 	// Routes
 	routes.BaseRouter(r)
