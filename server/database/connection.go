@@ -15,7 +15,7 @@ func newConnection() *mongo.Database {
 
 	env := utils.GetENV()
 
-	uri := fmt.Sprintf("mongodb://%s:%s@%s:%d", env.USER_DB, env.PASSWORD_DB, env.HOST_DB, env.PORT_DB)
+	uri := fmt.Sprintf("mongodb://%s:%s@%s:%d/?authSource=admin", env.USER_DB, env.PASSWORD_DB, env.HOST_DB, env.PORT_DB)
 
 	opts := options.Client().ApplyURI(uri)
 
